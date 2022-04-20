@@ -92,7 +92,9 @@ void Restart() {
     {
         lives = 6;
         guess = "?????";
-        main();
+        main(); // feedback: a design based on function calls is interesting. There is a danger with it, as you deepen your callstack when continue playing.
+                // this will at some point lead to stack overflow crash...
+                // Loop-based design doesn't have this risk however.
     }
 }
 
@@ -129,6 +131,7 @@ void Guess() {
 
 // check if guessed word is correct length
 bool ValidateGuess(string theGuess) {
+    // feedback: would be nice to check as well if it is a real word from the words file!
     if (theGuess.length() != 5)
     {
         TheGame("Invalid input! Please try again\n");
@@ -138,7 +141,7 @@ bool ValidateGuess(string theGuess) {
     return true;
 }
 
-void TheGame(string result = "") {
+void TheGame(string result = "") { // feedback: not sure about the benefit of using of the deafult value for the function argument here.
     cout << FOREGROUND(ForegroundColor::Yellow, "You are playing Wordle! Guess the FIVE letter word!\n");
     cout << FOREGROUND(ForegroundColor::Red, "Tries left: " << lives << "\n\n");
 
